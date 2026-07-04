@@ -5,14 +5,23 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
-	<!-- el dataSource ahora está aquí -->
+     	<!-- el dataSource definitivo con tus datos reales -->
 	<bean id="xxx"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="${bd.properties.url}"/>
-		<property name="username" value="${bd.properties.usuario}"/>		
-		<property name="password" value=""/>
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		
+		<!-- Forzamos el puerto libre 3308 de XAMPP -->
+		<property name="url" value="jdbc:mysql://127.0.0.1:3308/bd_tienda_online?serverTimezone=UTC&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+		
+		<!-- Forzamos tu usuario tienda -->
+		<property name="username" value="tienda"/>		
+		
+		<!-- Forzamos tu contraseña tienda123 -->
+		<property name="password" value="tienda123"/>
 	</bean>
+     
+ 
+	
 
 	<!-- la siguiente bean es la que vamos a usar todo el rato para utilizar hibernate -->
 	<bean id="fff"
@@ -35,22 +44,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" 
-		ref="fff" />
+		<property name="sessionFactory" ref="fff" />
 	</bean>
 
 </beans>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
